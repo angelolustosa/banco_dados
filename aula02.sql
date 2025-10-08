@@ -36,3 +36,68 @@ Order by id --ASC
 --Ordenar do maior para o menor
 SELECT * FROM cliente 
 Order by id DESC
+
+
+--------------------------------------
+
+CREATE TABLE carro (
+	marca VARCHAR(255),
+	modelo VARCHAR(255),
+	ano INT
+);
+
+INSERT INTO carro (marca, modelo, ano)
+VALUES ('Fiat', 'Cronos', 2025);
+
+SELECT * from carro;
+
+--Criando tabela de realcionamento tipo_carro com carro
+CREATE TABLE IF NOT EXISTS tipo_carro
+(
+	id SERIAL PRIMARY KEY,
+    tipo character varying(255) NOT NULL
+)
+
+--Inserindo valores na tipo_carro
+INSERT INTO tipo_carro (tipo)
+VALUES 
+('SUV'),
+('Hatch'),
+('Sedan'),
+('Pickup'),
+('Crossover'),
+('Conversível'),
+('Cupê'),
+('Minivan');
+
+
+--Select
+SELECT * from tipo_carro
+
+
+-- Adicionar coluna id se ainda não existir
+ALTER TABLE public.carro
+    ADD COLUMN IF NOT EXISTS id SERIAL PRIMARY KEY;
+
+
+Select id,marca, modelo, ano from carro	
+
+-- Adicionar coluna id_tipo_carro (referência para tipo_carro)
+ALTER TABLE public.carro
+    ADD COLUMN IF NOT EXISTS id_tipo_carro INTEGER;
+
+
+Select * from carro	
+
+
+-- Criar a constraint de chave estrangeira
+ALTER TABLE public.carro
+    ADD CONSTRAINT fk_tipo_carro
+    FOREIGN KEY (id_tipo_carro)
+    REFERENCES public.tipo_carro (id);
+
+
+--Inserindo com relacionamentos
+INSERT INTO public.carro (marca, modelo, ano, id_tipo_carro)
+VALUES ('Jeep', 'Compass', 2025, 1),
+       ('Volkswagen', 'Gol', 2023, 2);
