@@ -78,3 +78,25 @@ SELECT
 FROM
 	carro c
 JOIN tipo_carro tc ON c.id_tipo_carro = tc.id
+
+------------- JOIN, WHERE, LIKE e ILIKE -------------
+
+
+--Pegar todos os SUVs e da cor Branco
+SELECT 
+	c.modelo, tc.tipo, c.chassi, c.cor
+FROM
+	carro c
+JOIN tipo_carro tc ON c.id_tipo_carro = tc.id
+where c.cor = 'Branco'
+and c.id_tipo_carro = 1
+and tc.id = 1
+
+--pegar os carros que no chassi contenha 'zzz' em qualquer parte do chassi
+select * from carro c
+--where chassi ilike '%zzz%'
+where chassi ilike '8ab%' --o chassi inicia om 8ab
+
+--like (case sensitive)
+
+--ilike (case insensitive)
